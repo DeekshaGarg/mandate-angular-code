@@ -1,0 +1,186 @@
+<form #loginForm="ngForm" (ngSubmit)="submitCardDetails(mandateRegistration)">
+  <div class="row mt-5">
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="card card-body border-dark">
+
+            <p class="lead">
+              Dear Customer, You in the process of registering with the e-mandate. Please enter your card detials to approve the mandate
+              registeration if below mentioned fields are correct
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="col-sm-12">
+          <div class="card card-body border border-dark bg-muted">
+            <div class="d-flex justify-content-center">
+              <p class="lead text-dark">
+                Mandate Details
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="accountNumber"> Account Number </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" class="form-control flex-fill" name="accountNumber" [(ngModel)]="mandateRegistration.accountNumber" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="mandateIssuedTo"> Mandate issued to </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="mandateIssuedTo" [(ngModel)]="mandateRegistration.mandateIssuedTo" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="startDate"> Start Date </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="startDate" [(ngModel)]="mandateRegistration.startDate" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="endDate"> End Date </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="endDate" [(ngModel)]="mandateRegistration.endDate" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="frequency"> Frequency </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="frequency" [(ngModel)]="mandateRegistration.frequency" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="amount"> Amount in figures </label>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <input type="number" name="amount" [(ngModel)]="mandateRegistration.amountInFigures" class="form-control flex-fill" readonly />
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="amountFigure"> Amount in words </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="amountFigure" [(ngModel)]="mandateRegistration.amountInWords" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="purposeOfMandate"> Purpose of mandate </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="text" name="purposeOfMandate" [(ngModel)]="mandateRegistration.purposeOfMandate" class="form-control flex-fill" readonly />
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="cardNumber"> Card number </label>
+          </div>
+        </div>
+        <div class="col-sm-8">
+          <input type="number"  id="cc-number" ccNum class="form-control flex-fill" >
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="phoneNumber"> Expiry date </label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <input type="number" name="expiryMonth" [(ngModel)]="expiryMonth" class="form-control flex-fill" />
+        </div>
+        <div class="col-sm-2">
+          <input type="number" name="expiryYear" [(ngModel)]="expiryYear" class="form-control flex-fill" />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-sm-4">
+          <div class="d-flex justify-content-start align-items-end">
+            <label calss="text-dark" for="phoneNumber"> CVV </label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <input type="text" name="cvv" maxlength="4" [(ngModel)]="cvv" class="form-control flex-fill" (keypress)="validateCvv($event)"/>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-sm-6">
+          <div class="d-flex">
+            <input type="button" class="btn btn-primary d-block flex-fill" value="Proceed" (click)="proceed($event)"/>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="d-flex">
+            <input type="button" class="btn btn-primary d-block flex-fill" value="Cancel" (click)="cancel($event)"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="d-flex flex-column h-100">
+        <div class="card flex-grow-1 flex-fill">
+          <div class="card-header text-light" style="background-color: rgb(46, 46, 45);">
+            Promotional content
+          </div>
+          <div class="card-body bg-white-50" style="background-color: rgb(247, 246, 242);">
+            <ul>
+              <li>Promotional statement 1</li>
+              <li>Promotional statement 2</li>
+              <li>Promotional statement 3</li>
+              <li>Promotional statement 4</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
