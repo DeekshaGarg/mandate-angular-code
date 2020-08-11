@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { API_URL } from '../../app.constants';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { NPCI_API_URL, BANK_API_URI } from '../../app.constants';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { MandateRegistration } from '../../model/debit-card/mandate-registration';
+import { MndtStatus } from '../../model/debit-card/mndt-status';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,10 @@ export class MandateService {
   constructor(private http: HttpClient) { }
 
   
-  baseUrl=`${API_URL}`;
-  mandateDetailsEndPoint='/mandate-details';
+  npciUrl=`${NPCI_API_URL}`;
+  bankUrl=`${BANK_API_URI}`;
+  mandateDetailsEndPoint='/npci/mandate/auth-request';
+  mandateStatusEndPoint='/bank/mandate/status';
 
   httpOptions ={
     headers: new HttpHeaders({
@@ -35,7 +38,12 @@ export class MandateService {
     return throwError(errorMessage);
   }
 
-  getMandateDetails(){
-    return this.http.get<MandateRegistration>(this.baseUrl+this.mandateDetailsEndPoint,this.httpOptions).pipe(catchError(this.handleError));
+  sendMandateDetailsAndAuthMode(authMode: string, mndtReqId:string){
+    return this.http.get<MandateRegistration>(this.npciUrl+this.mandateDetailsEndPoint+'/'+authMode+'/'+mndtReqId,this.httpOptions).pipe(catchError(this.handleError));
+  }
+
+  sendMandateStatus(mndtStatus: MndtStatus){
+    console.log(mndtStatus)
+    return this.http.post(this.bankUrl+this.mandateStatusEndPoint,mndtStatus,this.httpOptions);
   }
 }

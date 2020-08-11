@@ -4,16 +4,17 @@ import { Router } from '@angular/router';
 import { MandateService } from '../service/debit-card/mandate.service';
 import { DebitCard } from '../model/debit-card/debit-card';
 import { LocalDataService } from '../service/debit-card/local-data.service';
+import { MndtStatus } from '../model/debit-card/mndt-status';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: './debit-card-login.component.html',
+  styleUrls: ['./debit-card-login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class DebitCardLoginComponent implements OnInit {
 
   debitCard:DebitCard
-  mandateRegistration=  new MandateRegistration('','','','','',0,'','',this.debitCard)
+  mandateRegistration=  new MandateRegistration('','','','','',0,'','',this.debitCard,'','')
   cvv:number
   expiryMonth:number
   expiryYear:number
@@ -22,15 +23,7 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private mandateService:MandateService, private localDataService:LocalDataService) { }
 
   ngOnInit(): void {
-    this.mandateService.getMandateDetails().subscribe(
-      res=>{
-        //console.log(res);
-        this.mandateRegistration=res;
-      },
-      error=>{
-        console.log(error)
-      }
-    )
+    this.mandateRegistration=JSON.parse(this.localDataService.getData());
   }
 
   submitCardDetails(user){
@@ -38,14 +31,22 @@ export class LoginComponent implements OnInit {
   }
 
   proceed(event){
-    this.router.navigate(['../own']);
-    //this.router.navigate(['../payment-gateway']);
-    this.localDataService.setData(this.mandateRegistration)
+    //this.router.navigate(['../own']);
+    this.router.navigate(['../payment-gateway']);
+    
     
   }
 
   cancel(event){
+    //console.log(this.mandateRegistration)
+    let status=new MndtStatus(this.mandateRegistration.mndtReqId,'Cancel')
+    this.mandateService.sendMandateStatus(status).subscribe(
+      res=>console.log(res),
+      error=>console.log(error)
+      
+    )
     this.router.navigate(['../rejection-confirmation']);
+
   }
 
   validateCvv(cvv){
